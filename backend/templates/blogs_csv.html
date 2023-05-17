@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>export_csv_lists</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <style>
+    
+    body{ 
+        display:flex; 
+        flex-direction:column; 
+        justify-content:center;
+        min-height:100vh; 
+        --bs-body-font-family: var(--bs-font-monospace);
+        --bs-body-line-height: 1.4;
+        --bs-body-bg: var(--bs-gray-100);
+        }
+
+
+    .table {
+        --bs-table-color: var(--bs-gray-600);
+        --bs-table-bg: var(--bs-gray-100);
+        --bs-table-border-color: black;
+        }
+        </style>
+        
+</head>
+
+<body>
+<div class="container text-center" style="background: linear-gradient(to bottom, #5d03ec 0%, #07ffff 100%)">
+    <div class="row">
+      <div class="col">
+        
+      </div>
+      <div class="col" style="color: antiquewhite; font-size: 1.5rem;">
+        <br>
+        <h1>Hello,</h1>
+        <h6>Hope You are Good <b>{{user}}</b></h6>
+        <p>These are your Blogs details .</p> 
+           <p> Happy to know you are with us. </p>
+        {% if(data) %}
+        <table class="table table-success table-striped ">
+            <thead>
+              <tr>
+              <th>Serial Number</th>
+              <th>Blog title</th>
+              <th>Blog Preview</th>
+              <th>Blog Content</th>
+              <th>Last modified</th>
+              </tr>
+            </thead>
+            <tbody >
+               {% for d in data %}
+               <tr>
+                  <td>{{d.SNo}}</td>
+                  <td>{{d.Blog_title}}</td>
+                  <td>{{d.Blog_preview}}</td>
+                  <td>{{d.Blog_content}}</td>
+                  <td>{{d.Last_modified}}</td>
+                </tr>
+                  {% endfor%} 
+            </tbody>
+        </table>
+        {% else %}
+            <p style="color: antiquewhite; font-size: 2rem;"> There are no Blogs </p>
+        {% endif %}
+      </div>
+    </div>
+    <div class="row" style="font-size: 1.5rem;">
+        <p>If you want you can export Csv data of your Blogs. </p>
+           <p> Just login to <i>BlogLite</i> Application and Export it by just pressing a button.</p>
+           <p>Or, just Collect the file attached with this Mail. </p>
+    </div>
+    <div style=" font-size: 1.5rem;">Thanks and Regrads
+  </div>
+    
+    
+</body>
+</html>

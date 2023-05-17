@@ -1,0 +1,651 @@
+openapi: 3.0.0
+info:
+  title: BlogLite
+  contact:
+    email: 21f1000169@student.onlinedegree.iitm.ac.in
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:5000/
+paths:
+  /api/user:
+    post:
+      tags:
+        - User Api
+      summary: For Signup
+      description: To register user
+      operationId: signup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: "aditi123"
+                email:
+                  type: string
+                  example: krishna@gmail.com
+                password1:
+                  type: string
+                  example: "123abcde"
+      responses:
+        "200":
+          description: User Registered Succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                  email:
+                    type: string
+        "400":
+          description: "Error!!!: Paramater"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    properties:
+                      email:
+                        type: string
+                        example: "email already exists"
+        "401":
+          description: "Error!!!: Paramater"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    properties:
+                      username:
+                        type: string
+                        example: "username already exists"
+        "500":
+          description: Internal Server Error
+    get:
+      tags:
+        - User Api
+      summary: Get user details
+      description: To obtain user details, first retrieve the Authentication-token from the flask-security login endpoint.
+      operationId: userdetails
+      parameters:
+        - in: header
+          name: Authentication-Token
+          description: An authorization header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: User Details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  blogs:
+                    type: string
+                  email:
+                    type: string
+                  fullname:
+                    type: string
+                  about:
+                    type: string
+                  follower:
+                    type: string
+                  following:
+                    type: string
+        "400":
+          description: "Error!!!: No Authentication-Token,login to access this error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Please log in to access this page."
+        "500":
+          description: Internal Server Error
+    put:
+      tags:
+        - User Api
+      summary: For updating user details.
+      description: Updating user
+      operationId: update
+      parameters:
+        - in: query
+          name: "fullname"
+          description: "Enter your full name"
+          required: true
+          schema:
+            type: string
+            example: "user"
+        - in: query
+          name: "about"
+          description: "Describe your list in few lines."
+          required: true
+          schema:
+            type: string
+            example: "The list contains tasks as cards for specific list"
+        - in: query
+          name: "profile_pic"
+          description: "profile picture"
+          schema:
+            type: string
+            example: "no-profile-pic.jpeg"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fullname:
+                  type: string
+                  example: "name"
+                about:
+                  type: string
+                  example: Describe your list in few line.
+                profile_pic:
+                  type: string
+                  example: "no-profile-pic.jpeg"
+      responses:
+        "200":
+          description: "User Updated."
+        "400":
+          description: "Error!!!fullname and about are required "
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "email is not valid"
+                  message:
+                    properties:
+                      fullname:
+                        type: string
+                        example: "full name required"
+                      about:
+                        type: string
+                        example: "email required"
+        "500":
+          description: "Internal Server Error"
+  /api/blog:
+    post:
+      tags:
+        - Blog Api
+      summary: Create new blog
+      description: To create new blog
+      operationId: blog
+      parameters:
+        - in: header
+          name: Authentication-Token
+          description: An authorization header
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: blogTitle
+          description: Enter your blog heading
+          required: true
+          schema:
+            type: string
+            example: My Blog
+        - in: query
+          name: blogContent
+          description: Describe your blog in few lines.
+          schema:
+            type: string
+            example: The blog contains blog
+        - in: query
+          name: blogImage
+          description: Blog Image.
+          schema:
+            type: string
+        - in: query
+          name: blogPrev
+          description: Blog Preview
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                blogTitle:
+                  type: string
+                  example: My Blog
+                blogContent:
+                  type: string
+                  example: The blog contains blog.
+                blogImage:
+                  type: string
+                  example: blogImage
+                blogPreview:
+                  type: string
+      responses:
+        "200":
+          description: Blog Created.
+        "400":
+          description: >-
+            Error!!!: No Authentication-Token,login to access this error, Blog
+            heading is required, Blog DEscription is required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Please log in to access this page.
+                  message:
+                    properties:
+                      blogTitle:
+                        type: string
+                        example: blog heading is required
+        "500":
+          description: Internal Server Error
+  /api/blog/{id}:
+    get:
+      tags:
+        - Blog Api
+      summary: >-
+        It will give you all the blogs,if you provide email and authentication
+        token.
+      description: To get all blogs
+      operationId: allblogs
+      parameters:
+        - in: path
+          name: id
+          description: Enter id
+          required: true
+          schema:
+            type: integer
+            example: 1
+        - in: header
+          name: Authentication-Token
+          description: An authorization header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Dictionary of all blog posts sent for the user.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  heading:
+                    type: string
+                    example: Mathematics
+                  blog_description:
+                    type: string
+                    example: I will try to see how many codes I wrote.
+        "400":
+          description: "Error!!!: No Authentication-Token,login to access this error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Authentication-Token Error:
+                    type: string
+                    example: Please log in to access this page.
+                  ID Error:
+                    type: string
+                    example: There are some wrong user details filled and asked for.
+        "401":
+          description: Wrong authentication token.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response:
+                    type: object
+                    properties:
+                      errors:
+                        type: string
+                        example: >-
+                          You are not authenticated. Please supply the correct
+                          credentials.
+        "500":
+          description: Internal Server Error
+    put:
+      tags:
+        - Blog Api
+      summary: For updating blog details.
+      description: Updating blog
+      operationId: updateBlog
+      parameters:
+        - in: path
+          name: id
+          description: Enter ID
+          required: true
+          schema:
+            type: integer
+            example: 1
+        - in: header
+          name: Authentication-Token
+          description: An authorization header
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: blogTitle
+          description: Enter your blog heading
+          schema:
+            type: string
+            example: heading
+        - in: query
+          name: blogContent
+          description: Describe your blog in few lines.
+          schema:
+            type: string
+            example: The blog contains blog
+        - in: query
+          name: blogImage
+          description: Blog image
+          schema:
+            type: string
+            example: image.jpeg
+        - in: query
+          name: blogPrev
+          description: Previous Data
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                blogTitle:
+                  type: string
+                  example: name
+                blogContent:
+                  type: string
+                  example: Describe your list in few line.
+                blogImage:
+                  type: string
+                  example: blog.jpeg
+                blogPrev:
+                  type: string
+      responses:
+        "200":
+          description: Blog Updated.
+        "400":
+          description: >-
+            Error!!!: No Authentication-Token,login to access this error, user
+            name is required
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: id is not valid
+                  message:
+                    properties:
+                      id:
+                        type: integer
+                        example: email required
+        "500":
+          description: Internal Server Error
+    delete:
+      tags:
+        - Blog Api
+      summary: For deleting blog.
+      description: Deleting a blog
+      operationId: deleteBlog
+      parameters:
+        - in: path
+          name: id
+          description: Enter ID
+          required: true
+          schema:
+            type: integer
+            example: 1
+        - in: header
+          name: Authentication-Token
+          description: An authorization header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successfully Deleted.
+        "400":
+          description: id does not exist.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: id does not exist.
+        "500":
+          description: Internal Server Error
+  /api/profile/{username}:
+    get:
+      tags:
+        - Profile Api
+      summary: Get user profile details
+      description: To obtain user details, first retrieve the Authentication-token from the flask-security login endpoint.
+      operationId: profdetails
+      parameters:
+        - in: path
+          name: username
+          description: username
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: User Details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+                  totalpost:
+                    type: integer
+                  followers:
+                    type: integer
+                  following:
+                    type: integer
+                  fullname:
+                    type: string
+                  about:
+                    type: string
+                  profile_pic:
+                    type: string
+                  blogs:
+                    type: string
+        "400":
+          description: "Error!!!: No Authentication-Token,login to access this error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Please log in to access this page."
+        "500":
+          description: Internal Server Error
+  /api/search:
+    post:
+      tags:
+        - Search Api
+      summary: For searching
+      description: To searching user
+      operationId: search
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: "aditi123"
+      responses:
+        "200":
+          description: User Registered Succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+        "400":
+          description: "Error!!!: Paramater"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    properties:
+                      username:
+                        type: string
+        "500":
+          description: Internal Server Error
+  /api/follow:
+    post:
+      tags:
+        - Follow Api
+      summary: For following
+      description: To following user
+      operationId: follow
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                follower:
+                  type: string
+                  example: "aditi123"
+                following:
+                  type: string
+      responses:
+        "200":
+          description: User Followed Succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  follower:
+                    type: string
+                  following:
+                    type: string
+        "400":
+          description: "Error!!!: Paramater"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    properties:
+                      username:
+                        type: string
+        "500":
+          description: Internal Server Error
+  /api/unfollow:
+    post:
+      tags:
+        - Unfollow Api
+      summary: For unfollowing
+      description: To unfollowing user
+      operationId: unfollow
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                follower:
+                  type: string
+                  example: "aditi123"
+                unfollowing:
+                  type: string
+      responses:
+        "200":
+          description: User unfollowed Succesfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  follower:
+                    type: string
+                  unfollowing:
+                    type: string
+        "400":
+          description: "Error!!!: Paramater"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    properties:
+                      follower:
+                        type: string
+                      unfollowing:
+                        type: string
+        "500":
+          description: Internal Server Error
+  /api/exportblogs:
+    get:
+      tags:
+        - Export Api
+      summary: Export user details
+      description: >-
+        To obtain user details, first retrieve the Authentication-token from the
+        flask-security login endpoint.
+      operationId: export
+      parameters:
+        - in: header
+          name: Authentication-Token
+          description: An authorization header
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Export Details
+          content:
+            application/json:
+              schema:
+                type: object
+        "400":
+          description: "Error!!!: No Authentication-Token,login to access this error"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Please log in to access this page.
+        "500":
+          description: Internal Server Error
