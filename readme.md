@@ -12,8 +12,8 @@
 - `project.sqlite3` is the sqlite database. It can be anywhere on the machine, just the adjustment in the path in `app.py` is required. One of the database is shipped for testing.
 - The application code for my app is `/`
 - `templates` is the default folder where templates are stored which is used for sending mails.
-- `application` contains the `api`, `cache.py`, `clry.py`, `emailgen.py`, `models.py`, `tasks.py` and `static` folder.
-- `static` a folder in which we have `IMG` folder which has images used in the app. Also the graphs generated are saved in it which is further encoded to send to frontend and decoded over there.
+- It also have `api`, `cache.py`, `cachingdata.py`,`clery.py`, `emailgenr.py`, `models.py` and `tasks.py` folder, which all cointains Apis, caching initialization, caching, celery initialization, email generation, backend tasks like reminders export etc. respectively.
+- `static` a folder in which we have csv files of export data.
 - `Project Documentation` having a brief description about app
 - A `readme` file and `requirements` file
 
@@ -21,6 +21,7 @@
 
 - `node_modules` required for running VueJS CLI
 - `public` having public components
+- `assets` having public necessary images and two other folders `blogs` and `profile` both having user uploaded blog image and profile image respectively.
 - `src` is the default folder where frontend components and routers are located.
 - `components` which has vue components for frontend, `router` which contains `index.js` for defining different routes, `App.vue` the page on which app is being served, `index.js` for app start and `store` to create the store for vue.
 - A `readme` file and other required configurations.
