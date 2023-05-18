@@ -20,7 +20,7 @@
 - `project.sqlite3` is the sqlite database. It can be anywhere on the machine, just the adjustment in the path in `app.py` is required. One of the database is shipped for testing.
 - The application code for my app is `/`
 - `templates` is the default folder where templates are stored which is used for sending mails.
-- It also have `api`, `cache.py`, `cachingdata.py`,`clery.py`, `emailgenr.py`, `models.py` and `tasks.py` folders, which cointains all apis, caching initialization, caching, celery initialization, email generation, backend tasks like reminders export etc. respectively.
+- It also have `api.py`, `cache.py`, `cachingdata.py`,`clery.py`, `emailgenr.py`, `models.py` and `tasks.py` folders, which cointains all apis, caching initialization, caching, celery initialization, email generation, backend tasks like reminders export etc. respectively.
 - `static` a folder in which we have csv files of exported data.
 
 # Folder Structure of `frontend`
