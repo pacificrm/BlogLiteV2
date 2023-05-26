@@ -73,12 +73,6 @@ def create():
         db.create_all()
 
 
-# @app.before_first_request
-# def create_user():
-#     if not user_datastore.find_user(email="krishnaanushka137@gmail.com"):
-#         user_datastore.create_user(email="krishnaanushka137@gmail.com",username="Anushka",password=hash_password("password"))
-#     db.session.commit()  
-
 @app.route('/')
 def start():
     return "hello"

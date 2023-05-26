@@ -34,8 +34,6 @@ class UsersAPI(Resource):
     @auth_required('token')
     def get(self):
         chk=Users.query.filter_by(id=current_user.id).first()
-        # ck=chk.followed.all()
-        # print(ck)
         following= Follow.query.filter_by(follower_id=current_user.id).all()
         follower= Follow.query.filter_by(followed_id=current_user.id).all()
         flr=[]
@@ -86,7 +84,6 @@ class UsersAPI(Resource):
         try:
             fullname=request.form.get('fullname')
             about=request.form.get('about')
-            # blog_content=request.form.get('blogContent')
             profile_pic=request.files['profile_pic']
             imgname="no-profile-pic.jpeg"
             if profile_pic:
@@ -98,8 +95,6 @@ class UsersAPI(Resource):
         except:
             fullname=request.form.get('fullname')
             about=request.form.get('about')
-            # blog_content=request.form.get('blogContent')
-            # profile_pic=request.files['profile_pic']
             imgname="no-profile-pic.jpeg"
             Users.query.filter_by(id=current_user.id).update({'fullname': fullname, 'about': about,'profile_img': imgname
                                          })
