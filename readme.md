@@ -2,7 +2,7 @@
 
 # Local Setup
 
-- Run `pip install -r requirements.txt` to install all dependencies written in `requirements.txt` which is inside `backend` folder
+- Run `pip install -r requirements.txt` to install all dependencies written in `requirements.txt` .
 
 # Local Development Run
 
