@@ -10,7 +10,8 @@
 - `npm run serve` in frontend for serving the app from frontend on Vue.
 - `~/go/bin/MailHog` for starting mailhog on local server.
 - `celery -A app.celery worker -l info ` in backened to start the celery workers.
-- `celery -A app.celery beat --max-interval 1 -l info` in backened to start the celery beat and scheduler. -`redis-cli` to start the redis server in terminal.
+- `celery -A app.celery beat --max-interval 1 -l info` in backened to start the celery beat and scheduler.
+- `redis-cli` to start the redis server in terminal.
 
 # Folder Structure of `/`
 
